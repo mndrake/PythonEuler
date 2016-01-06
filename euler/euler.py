@@ -1,9 +1,8 @@
 import numpy as np
+import operator
 from sys import setrecursionlimit
 setrecursionlimit(4000)
 
-__all__ = ['memoize', 'timer', 'primes', 'prime',
-           'gcd', 'lcm', 'DivisorSigma', 'FactorInteger']
 
 # utility methods ------------------------------------
 
@@ -26,6 +25,9 @@ def timer(f):
 
 def readlines(file):
     return open(file).read().splitlines()
+
+fst = operator.itemgetter(0)
+snd = operator.itemgetter(1)
 
 # number theory methods ---------------------------------------
 
@@ -58,14 +60,14 @@ def prime(n):
     return _primes[n]
 
 
-def gcd(a,b):
+def GCD(a,b):
     while b:
         a, b = b, a%b
     return a
 
 
-def lcm(a,b):
-    return a / gcd(a,b) * b
+def LCM(a,b):
+    return a / GCD(a,b) * b
 
 
 def FactorInteger(n):
