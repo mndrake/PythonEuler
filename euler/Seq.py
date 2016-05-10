@@ -21,13 +21,25 @@ class Seq:
 
 def unfold(function, initial):
     x = initial
-    while x is not None:
-        w, x = function(x)
-        yield w
+    while True:
+        res = function(x)
+        if res is None:
+            raise StopIteration
+        else:
+            w, x = res
+            yield w
+
 
 def init(n, function):
     i = 0
     while i < n:
+        yield function(i)
+        i += 1
+
+
+def initInfinite(function):
+    i = 0
+    while True:
         yield function(i)
         i += 1
 
@@ -49,6 +61,10 @@ def takeWhile(sequence, function):
 
 
 @Seq
+def skipWhile(sequence, function):
+    return _itertools.dropwhile(function, sequence)
+
+@Seq
 def map(sequence, function):
         return _itertools.imap(function, sequence)
 
@@ -56,6 +72,11 @@ def map(sequence, function):
 @Seq
 def toList(sequence):
     return list(sequence)
+
+
+@Seq
+def toSet(sequence):
+    return set(sequence)
 
 
 @Seq
@@ -102,7 +123,7 @@ def takeWhile(sequence, function):
 
 @Seq
 def find(sequence, function):
-    return next(_itertools.ifilter(function, sequence))
+    return next(_itertools.ifilter(function, sequence), None)
 
 
 @Seq
@@ -126,6 +147,34 @@ def length(sequence):
     for x in sequence:
         count += 1
     return count
+
+
+@Seq
+def exists(sequence, function):
+    return __builtin__.any(function(x) for x in sequence)
+
+
+@Seq
+def collect(sequence, function):
+    for s in _itertools.imap(function, sequence):
+        for x in s:
+            yield x
+
+
+@Seq
+def forall(sequence, function):
+    for x in sequence:
+        if not function(x):
+            return False
+    return True
+
+
+@Seq
+def maxBy(sequence, function):
+    return __builtin__.max(sequence, key=function)
+
+
+
 
 #     def count(self):
 #         from itertools import groupby

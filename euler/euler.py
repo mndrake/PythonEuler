@@ -60,6 +60,18 @@ def prime(n):
     return _primes[n]
 
 
+def is_prime(n):
+    if n == 1:
+        return False
+    ps = primes()
+    p = ps.next()
+    while p * p <= n:
+        if n % p == 0:
+            return False
+        p = ps.next()
+    return True
+
+
 def GCD(a,b):
     while b:
         a, b = b, a%b
