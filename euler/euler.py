@@ -61,7 +61,7 @@ def prime(n):
 
 
 def is_prime(n):
-    if n == 1:
+    if n < 1:
         return False
     ps = primes()
     p = ps.next()
@@ -73,16 +73,19 @@ def is_prime(n):
 
 
 def GCD(a,b):
+    """https://reference.wolfram.com/language/ref/GCD.html"""
     while b:
         a, b = b, a%b
     return a
 
 
 def LCM(a,b):
+    """https://reference.wolfram.com/language/ref/LCM.html"""
     return a / GCD(a,b) * b
 
 
 def FactorInteger(n):
+    """https://reference.wolfram.com/language/ref/FactorInteger.html"""
     from itertools import groupby
     factors = []
     ps = primes()
@@ -101,6 +104,7 @@ def FactorInteger(n):
 
 
 def DivisorSigma(n):
+    """https://reference.wolfram.com/language/ref/DivisorSigma.html"""
     import operator
     return reduce(operator.mul,
                   [(x[1] + 1) for x in FactorInteger(n)],
