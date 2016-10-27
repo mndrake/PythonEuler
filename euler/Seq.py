@@ -54,6 +54,12 @@ def sumBy(sequence, function):
     return __builtin__.sum(_itertools.imap(function, sequence))
 
 @Seq
+def scan(sequence, function, state):
+    for x in sequence:
+        state = function(state, x)
+        yield state
+
+@Seq
 def filter(sequence, function):
     return _itertools.ifilter(function, sequence)
 
@@ -72,6 +78,12 @@ def skip(sequence, n):
     for i in range(n):
         sequence.next()
     return sequence
+
+@Seq
+def nth(sequence, n):
+    for i in range(n):
+        sequence.next()
+    return sequence.next()
 
 @Seq
 def map(sequence, function):
@@ -100,6 +112,9 @@ def take(sequence, n):
 def max(sequence):
     return __builtin__.max(sequence)
 
+@Seq
+def min(sequence):
+    return __builtin__.min(sequence)
 
 @Seq
 def reduce(sequence, function):
@@ -175,6 +190,14 @@ def collect(sequence, function):
         for x in s:
             yield x
 
+@Seq
+def distinct(seq):
+    seen = set()
+    for x in seq:
+        if x in seen:
+            continue
+        seen.add(x)
+        yield x
 
 @Seq
 def forall(sequence, function):
