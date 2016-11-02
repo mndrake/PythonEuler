@@ -2,7 +2,7 @@ import numpy as np
 import operator
 from sys import setrecursionlimit
 setrecursionlimit(4000)
-
+import Seq as _Seq
 
 # utility methods ------------------------------------
 
@@ -59,7 +59,6 @@ def prime(n):
     while n >= len(_primes): _grow_primes()
     return _primes[n]
 
-
 def is_prime(n):
     if n < 1:
         return False
@@ -70,6 +69,21 @@ def is_prime(n):
             return False
         p = ps.next()
     return True
+
+
+def PrimeQ(n):
+    """yields true if a prime number and yields false otherwise"""
+    return is_prime(n)
+
+
+def PrimePi(n):
+    """gives the number of primes less than or equal to n"""
+    ps = primes()
+    p = ps.next()
+    i = 0
+    while prime(i) <= n:
+        i += 1
+    return i
 
 
 def GCD(a,b):
@@ -109,6 +123,8 @@ def DivisorSigma(n):
     return reduce(operator.mul,
                   [(x[1] + 1) for x in FactorInteger(n)],
                   1)
+
+
 
 # lazy lists ---------------------------------------------------
 

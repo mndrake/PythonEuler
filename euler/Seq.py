@@ -55,6 +55,7 @@ def sumBy(sequence, function):
 
 @Seq
 def scan(sequence, function, state):
+    yield state
     for x in sequence:
         state = function(state, x)
         yield state
@@ -101,6 +102,11 @@ def toList(sequence):
 @Seq
 def toSet(sequence):
     return set(sequence)
+
+
+@Seq
+def append(sequence1, sequence2):
+    return _itertools.chain(sequence2, sequence1)
 
 
 @Seq
